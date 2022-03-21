@@ -33,7 +33,7 @@
 `runApplication $(getApplication)` 
 
 # For parallel run
-- Edit file system/decomposeParDict accodingly
+- Edit file system/decomposeParDict accordingly
 - run commands \
 `source $WM_PROJECT_DIR/bin/tools/RunFunctions` \
 `restore0Dir` \
