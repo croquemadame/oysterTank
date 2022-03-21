@@ -18,7 +18,7 @@ application     pimpleFoam;
 
 startFrom       latestTime;
 
-startTime       2.2;
+startTime       0;
 
 stopAt          endTime;
 
@@ -87,34 +87,28 @@ functions
         }
     }
 
-minmaxdomain
-{
-    type fieldMinMax;
-
-    libs (fieldFunctionObjects);
-
-    enabled true;
-
-    mode magnitude;
-
-    writeControl    timeStep;
-    writeInterval   10;
-    executeControl  timeStep;
-    executeInterval 10;
-
-    log false;
-
-    fields (p U k epsilon s);
-}
-
+    minmaxdomain
+    {
+        type fieldMinMax;
+    
+        libs (fieldFunctionObjects);
+    
+        enabled true;
+    
+        mode magnitude;
+    
+        writeControl    timeStep;
+        writeInterval   10;
+        executeControl  timeStep;
+        executeInterval 10;
+    
+        log false;
+    
+        fields (p U k epsilon s);
+    }
 
     #include "probeControl"
     #include "solverInfo"
-//    #include "streamLines"
-//    #include "wallBoundedStreamLines"
-//    #include "cuttingPlane"
-//    #include "forceCoeffs"
-//    #include "ensightWrite"
 }
 
 // ************************************************************************* //
