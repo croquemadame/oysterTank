@@ -1,0 +1,120 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2012                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     pimpleFoam;
+
+startFrom       latestTime;
+
+startTime       2.2;
+
+stopAt          endTime;
+
+endTime         10;
+
+deltaT          1e-3;
+
+writeControl    adjustableRunTime;
+
+writeInterval   0.1;
+
+purgeWrite      0;
+
+writeFormat     binary;
+
+writePrecision  10;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   10;
+
+runTimeModifiable true;
+
+adjustTimeStep yes;
+
+maxCo          0.3;//0.5;
+
+maxDeltaT      0.1;
+
+functions
+{
+    scalar1
+    {
+        type            scalarTransport;
+        libs            ("libsolverFunctionObjects.so");
+    
+    
+        // Optional entries
+    
+        // Name of scalar field to transport, default = 's'
+        field           s;
+    
+        // Name of flux field, default = 'phi'
+        phi             phi;
+    
+        // Name of phase field to constrain scalar to, default = 'none'
+        phase           none;
+    
+        // Set the scalar to zero on start/re-start
+        resetOnStartUp  no;
+    
+        // Name of field to use when looking up schemes from fvSchemes
+        // default = <field>
+        schemesField    s;
+    
+        // Diffusivity
+    
+        // Name of field to use as diffusivity, default = 'none'
+        nut             nut;//none;
+    
+        // Run-time selectable sources
+        fvOptions
+        {
+        }
+    }
+
+minmaxdomain
+{
+    type fieldMinMax;
+
+    libs (fieldFunctionObjects);
+
+    enabled true;
+
+    mode magnitude;
+
+    writeControl    timeStep;
+    writeInterval   10;
+    executeControl  timeStep;
+    executeInterval 10;
+
+    log false;
+
+    fields (p U k epsilon s);
+}
+
+
+    #include "probeControl"
+    #include "solverInfo"
+//    #include "streamLines"
+//    #include "wallBoundedStreamLines"
+//    #include "cuttingPlane"
+//    #include "forceCoeffs"
+//    #include "ensightWrite"
+}
+
+// ************************************************************************* //
