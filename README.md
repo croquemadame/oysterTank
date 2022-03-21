@@ -12,32 +12,32 @@
 - run command
 `gmshToFoam oysterTank.mshi`
 
-## Edit file constant/polyMesh/boundary and give set patch type to wall for bottom/top/left/right/front/back
+## Edit file constant/polyMesh/boundary and set patch type to wall for bottom/top/left/right/front/back
 
 ## Check mesh
 - run command
-`checkMesh > log.checkMesh 2&>1 &`
+`checkMesh > log.checkMesh 2>&1 &`
 
 ## Create inlet/outlet cell sets and porosity zone
 - run command
-`topoSet`
+`topoSet > log.topSet 2>&1 &`
 
 # Create inlet/outlet patches
 - run command
-`createPatch`
+`createPatch log.createPatch 2>&1 &`
 
-#For serial run
+# For serial run
 - run commands
-`source $WM_PROJECT_DIR/bin/tools/RunFunctions`
-`restore0Dir`
-`runApplication $(getApplication)`
+`source $WM_PROJECT_DIR/bin/tools/RunFunctions` \
+`restore0Dir` \
+`runApplication $(getApplication)` \
 
-#For parallel run
+# For parallel run
 - Edit file system/decomposeParDict accodingly
 - run commands
-`source $WM_PROJECT_DIR/bin/tools/RunFunctions`
-`restore0Dir`
-`runApplication decomposePar`
-`runParallel renumberMesh -overwrite`
-`runParallel $(getApplication)
+`source $WM_PROJECT_DIR/bin/tools/RunFunctions` \
+`restore0Dir` \
+`runApplication decomposePar` \
+`runParallel renumberMesh -overwrite` \
+`runParallel $(getApplication)` 
 
